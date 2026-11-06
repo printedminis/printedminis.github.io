@@ -54,7 +54,7 @@ html, body {
 .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .thumb {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 3;
   background: var(--thumb);
   display: grid;
   place-items: center;
@@ -116,11 +116,40 @@ button {
 .viewer-status {
   position: absolute;
   top: 50%;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(320px, calc(100vw - 32px));
   text-align: center;
-  padding: 0 16px;
+  pointer-events: none;
 }
+.progress {
+  height: 6px;
+  margin-top: 10px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.progress[hidden] { display: none; }
+.progress span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.2s;
+}
+
+.plate-bar {
+  position: absolute;
+  top: 76px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.plate-bar[hidden] { display: none; }
+.plate-bar button { background: rgba(28, 31, 38, 0.88); font-size: 13px; padding: 6px 10px; }
+.plate-bar button[aria-pressed="true"] { background: var(--accent); color: #0b1a10; border-color: transparent; }
 
 .hint {
   position: absolute;

@@ -32,8 +32,12 @@
       <h2 id="viewer-name"></h2>
       <button id="reset-btn" type="button">Reset view</button>
     </div>
-    <p id="viewer-status" class="viewer-status status" role="status"></p>
-    <p class="hint">Drag to rotate · Scroll or pinch to zoom · Right-drag to pan</p>
+    <div id="plate-bar" class="plate-bar" hidden></div>
+    <div class="viewer-status">
+      <p id="viewer-status" class="status" role="status"></p>
+      <div id="progress-bar" class="progress" hidden><span></span></div>
+    </div>
+    <p class="hint">Drag to rotate · Scroll or pinch to zoom · Right-drag or two fingers to pan · Double-click to reset</p>
   </section>
 
   <script type="module" src="app.js"></script>

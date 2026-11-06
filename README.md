@@ -9,7 +9,14 @@ The site loads nothing from other websites. Everything it needs is in this repo.
 
 ## Adding models
 1. Open the `models` folder on GitHub, click **Add file → Upload files**, and drop in your `.3mf` files.
-2. Commit. A GitHub Action updates `models/models.json` automatically within about a minute.
+2. Commit. Within about a minute a GitHub Action updates `models/models.json` and
+   copies each model's preview picture (stored inside the 3MF) into `images/`.
+
+## Gallery pictures (`images/`)
+Each model's card shows `images/<model name>.png` (or .jpg/.webp). They're pulled
+out of the 3MF automatically. To use your own picture instead, upload one with
+the same name as the model, e.g. `images/LeafAMS.jpg` for `models/LeafAMS.3mf`,
+and delete the old one.
 
 ## Viewing it on your own computer
 Run a small local server in this folder (double-clicking index.html won't work):

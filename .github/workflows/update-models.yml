@@ -1,9 +1,9 @@
-name: Update model list
+name: Update model list and images
 
 on:
   push:
     branches: [main]
-    paths: ['models/**']
+    paths: ['models/**', 'images/**']
   workflow_dispatch:
 
 permissions:
@@ -14,20 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Rebuild models/models.json
-        run: |
-          python3 - <<'PY'
-          import json, os
-          files = sorted(f for f in os.listdir('models') if f.lower().endswith('.3mf'))
-          with open('models/models.json', 'w') as fh:
-              json.dump(files, fh, indent=2)
-              fh.write('\n')
-          PY
+      - name: Rebuild models/models.json and extract preview images
+        run: python3 .github/scripts/update_models.py
       - name: Commit if changed
         run: |
-          if git diff --quiet models/models.json; then exit 0; fi
+          git add models/models.json images
+          if git diff --cached --quiet; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-          git add models/models.json
-          git commit -m "Update model list"
+          git commit -m "Update model list and images"
           git push
