@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3D Printed Minis</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./vendor/three/three.module.js",
+      "three/addons/": "./vendor/three/addons/",
+      "fflate": "./vendor/fflate.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <main id="gallery-view" class="page">
+    <header class="page-head">
+      <h1>3D Printed Minis</h1>
+      <p class="sub">Click a model to view it in 3D.</p>
+    </header>
+    <p id="gallery-status" class="status" role="status">Loading models…</p>
+    <ul id="grid" class="grid"></ul>
+  </main>
+
+  <section id="viewer-view" class="viewer" hidden>
+    <div id="viewer-canvas"></div>
+    <div class="viewer-bar">
+      <button id="back-btn" type="button">← Gallery</button>
+      <h2 id="viewer-name"></h2>
+      <button id="reset-btn" type="button">Reset view</button>
+    </div>
+    <p id="viewer-status" class="viewer-status status" role="status"></p>
+    <p class="hint">Drag to rotate · Scroll or pinch to zoom · Right-drag to pan</p>
+  </section>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
