@@ -1,57 +1,67 @@
 [
   {
-    "file": "christmas_gnome_ams.3mf",
-    "name": "Knitted Christmas Gnome",
-    "image": "christmas_gnome_ams.png"
+    "file": "santa_ams (1).3mf",
+    "name": "Santa Claus",
+    "image": "santa_ams (1).jpg"
   },
   {
     "file": "mrsclaus_ams.3mf",
-    "name": "Knitted Mrs. Claus - Christmas",
-    "image": "mrsclaus_ams.png"
-  },
-  {
-    "file": "penguin_ams.3mf",
-    "name": "Knitted Penguin with Santa Hat - Christmas",
-    "image": "penguin_ams.png"
-  },
-  {
-    "file": "polarbearsanta_ams.3mf",
-    "name": "Knitted Polar Bear with Santa Hat - Christmas",
-    "image": "polarbearsanta_ams.png"
+    "name": "Mrs. Claus",
+    "image": "mrsclaus_ams.jpg"
   },
   {
     "file": "reindeer_ams.3mf",
-    "name": "Knitted Reindeer - Christmas",
-    "image": "reindeer_ams.png"
-  },
-  {
-    "file": "santa_ams (1).3mf",
-    "name": "Knitted Santa Claus - Christmas",
-    "image": "santa_ams (1).png"
-  },
-  {
-    "file": "santa_cat_ams.3mf",
-    "name": "Knitted Cat with Santa Hat - Christmas",
-    "image": "santa_cat_ams.png"
-  },
-  {
-    "file": "santadog_ams.3mf",
-    "name": "Knitted Dog with Santa Hat - Christmas",
-    "image": "santadog_ams.png"
+    "name": "Reindeer",
+    "image": "reindeer_ams.jpg"
   },
   {
     "file": "SantaHat.3mf",
-    "name": "Knitted Mini Santa Hat - Christmas",
-    "image": "SantaHat.png"
-  },
-  {
-    "file": "SnowmanAMs.3mf",
-    "name": "Knitted Snowman - Christmas",
-    "image": "SnowmanAMs.png"
+    "name": "Mini Santa Hat",
+    "image": "SantaHat.jpg"
   },
   {
     "file": "tree_ams (1).3mf",
-    "name": "Knitted Christmas Tree",
-    "image": "tree_ams (1).png"
+    "name": "Christmas Tree",
+    "image": "tree_ams (1).jpg"
+  },
+  {
+    "file": "penguin_ams.3mf",
+    "name": "Penguin with Santa Hat",
+    "image": "penguin_ams.jpg"
+  },
+  {
+    "file": "polarbearsanta_ams.3mf",
+    "name": "Polar Bear with Santa Hat",
+    "image": "polarbearsanta_ams.jpg"
+  },
+  {
+    "file": "santa_cat_ams.3mf",
+    "name": "Cat with Santa Hat",
+    "image": "santa_cat_ams.jpg"
+  },
+  {
+    "file": "santadog_ams.3mf",
+    "name": "Dog with Santa Hat",
+    "image": "santadog_ams.jpg"
+  },
+  {
+    "file": "babypolarbear.3mf",
+    "name": "Baby Polar Bear",
+    "image": "babypolarbear.jpg"
+  },
+  {
+    "file": "christmas_gnome_ams.3mf",
+    "name": "Christmas Gnome",
+    "image": "christmas_gnome_ams.jpg"
+  },
+  {
+    "file": "gingerbreadman_ams.3mf",
+    "name": "Gingerbread Man",
+    "image": "gingerbreadman_ams.jpg"
+  },
+  {
+    "file": "SnowmanAMs.3mf",
+    "name": "Snowman",
+    "image": "SnowmanAMs.jpg"
   }
 ]

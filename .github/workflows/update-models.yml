@@ -3,7 +3,7 @@ name: Update model list and images
 on:
   push:
     branches: [main]
-    paths: ['models/**', 'images/**']
+    paths: ['models/**', 'images/**', 'gallery-settings.json']
   workflow_dispatch:
 
 permissions:
@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install image resizer
+        run: pip install pillow
       - name: Rebuild models/models.json and extract preview images
         run: python3 .github/scripts/update_models.py
       - name: Commit if changed
