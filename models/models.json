@@ -1,5 +1,10 @@
 [
   {
+    "file": "mrsclaus_ams.3mf",
+    "name": "Knitted Mrs. Claus - Christmas",
+    "image": "mrsclaus_ams.png"
+  },
+  {
     "file": "polarbearsanta_ams.3mf",
     "name": "Knitted Polar Bear with Santa Hat - Christmas",
     "image": "polarbearsanta_ams.png"
@@ -18,6 +23,11 @@
     "file": "santa_cat_ams.3mf",
     "name": "Knitted Cat with Santa Hat - Christmas",
     "image": "santa_cat_ams.png"
+  },
+  {
+    "file": "santadog_ams.3mf",
+    "name": "Knitted Dog with Santa Hat - Christmas",
+    "image": "santadog_ams.png"
   },
   {
     "file": "SantaHat.3mf",
