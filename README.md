@@ -24,3 +24,11 @@ Run a small local server in this folder (double-clicking index.html won't work):
     python -m http.server 8000
 
 then open http://localhost:8000
+
+## Order and names (`gallery-settings.json`)
+- `order`: model file names (without `.3mf`) in the order they appear. Models not
+  in the list go after these, sorted by name. `"santa_ams"` also matches
+  re-uploads like `santa_ams (1).3mf`.
+- `remove_from_names`: text cut out of every name, e.g. `"Knitted "` and `" - Christmas"`.
+
+Edit it on GitHub (pencil icon) and commit. The gallery updates in about a minute.
