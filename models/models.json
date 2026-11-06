@@ -1,3 +1,7 @@
 [
-  "LeafAMS.3mf"
+  {
+    "file": "LeafAMS.3mf",
+    "name": "Knitted Maple Leaf",
+    "image": "LeafAMS.png"
+  }
 ]
