@@ -5,6 +5,11 @@
     "image": "polarbearsanta_ams.png"
   },
   {
+    "file": "reindeer_ams.3mf",
+    "name": "Knitted Reindeer - Christmas",
+    "image": "reindeer_ams.png"
+  },
+  {
     "file": "santa_ams (1).3mf",
     "name": "Knitted Santa Claus - Christmas",
     "image": "santa_ams (1).png"
@@ -13,5 +18,10 @@
     "file": "SnowmanAMs.3mf",
     "name": "Knitted Snowman - Christmas",
     "image": "SnowmanAMs.png"
+  },
+  {
+    "file": "tree_ams (1).3mf",
+    "name": "Knitted Christmas Tree",
+    "image": "tree_ams (1).png"
   }
 ]
