@@ -1,8 +1,18 @@
 [
   {
+    "file": "christmas_gnome_ams.3mf",
+    "name": "Knitted Christmas Gnome",
+    "image": "christmas_gnome_ams.png"
+  },
+  {
     "file": "mrsclaus_ams.3mf",
     "name": "Knitted Mrs. Claus - Christmas",
     "image": "mrsclaus_ams.png"
+  },
+  {
+    "file": "penguin_ams.3mf",
+    "name": "Knitted Penguin with Santa Hat - Christmas",
+    "image": "penguin_ams.png"
   },
   {
     "file": "polarbearsanta_ams.3mf",
