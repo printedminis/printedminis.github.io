@@ -223,6 +223,16 @@
           "image": "Farm/horse.jpg"
         },
         {
+          "file": "Farm/pig_ams.3mf",
+          "name": "Pig",
+          "image": "Farm/pig_ams.jpg"
+        },
+        {
+          "file": "Farm/sheep_ams (1).3mf",
+          "name": "Sheep",
+          "image": "Farm/sheep_ams (1).jpg"
+        },
+        {
           "file": "Farm/turkey_ams.3mf",
           "name": "Turkey",
           "image": "Farm/turkey_ams.jpg"
