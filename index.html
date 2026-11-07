@@ -1,9 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>3D Printed Minis</title>
+  <script>
+    try { var t = localStorage.getItem('theme'); if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
   <link rel="stylesheet" href="style.css">
   <script type="importmap">
   {
@@ -16,10 +19,13 @@
   </script>
 </head>
 <body>
+  <button id="theme-btn" class="theme-btn" type="button" aria-label="Switch to dark mode"></button>
+
   <main id="gallery-view" class="page">
     <header class="page-head">
-      <h1>3D Printed Minis</h1>
-      <p class="sub">Click a model to view it in 3D.</p>
+      <a id="home-link" class="crumb" href="#" hidden>← All models</a>
+      <h1 id="page-title">3D Printed Minis</h1>
+      <p id="page-sub" class="sub">Click a model to view it in 3D.</p>
     </header>
     <p id="gallery-status" class="status" role="status">Loading models…</p>
     <ul id="grid" class="grid"></ul>
@@ -28,7 +34,7 @@
   <section id="viewer-view" class="viewer" hidden>
     <div id="viewer-canvas"></div>
     <div class="viewer-bar">
-      <button id="back-btn" type="button">← Gallery</button>
+      <button id="back-btn" type="button">← Back</button>
       <h2 id="viewer-name"></h2>
       <button id="reset-btn" type="button">Reset view</button>
     </div>

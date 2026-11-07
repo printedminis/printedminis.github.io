@@ -1,15 +1,20 @@
 """Rebuild models/models.json and pull a preview picture out of each .3mf.
 
-gallery-settings.json (optional) controls:
-  * "remove_from_names": text cut out of every model name, e.g. "Knitted ".
-  * "order": file names (without .3mf) in the order they should appear. A name
-    also matches re-uploads like "santa_ams (1).3mf". Models not listed go
-    after these, sorted by name.
+Layout:
+  models/<file>.3mf            -> shown on the home page
+  models/<Folder>/<file>.3mf   -> shown inside the folder <Folder>
+  images/[<Folder>/]<file>.jpg -> the model's picture (same path as the model)
 
-For every models/<name>.3mf:
-  * if images/<name>.png/.jpg/.jpeg/.webp already exists, that picture is used
-    (so you can drop in your own photo);
-  * otherwise the best picture stored inside the 3MF is copied to images/.
+If a picture with the model's name already exists (.png/.jpg/.jpeg/.webp) it is
+kept, so you can upload your own. Otherwise the best picture stored inside the
+3MF is saved as a small JPG.
+
+gallery-settings.json (optional):
+  "remove_from_names": text cut out of every model name.
+  "order": file names (without .3mf) in display order for the home page.
+  "folders": { "<Folder>": { "outline": "#hex", "order": [...],
+                             "remove_from_names": [...] } }
+             Folders appear in this order; other folders follow alphabetically.
 """
 import html
 import io
@@ -31,15 +36,25 @@ PREFERRED = [
 ]
 
 
-def existing_image(base):
+def load_settings():
+    try:
+        with open('gallery-settings.json') as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        return {}
+
+
+def existing_image(rel_base):
     for ext in IMAGE_EXTS:
-        if os.path.exists(os.path.join(IMAGES, base + ext)):
-            return base + ext
+        if os.path.exists(os.path.join(IMAGES, rel_base + ext)):
+            return rel_base + ext
     return None
 
 
-def save_small(data, base, ext):
+def save_small(data, rel_base, ext):
     """Save a gallery-sized JPG (fast to load). Falls back to the original."""
+    out_dir = os.path.dirname(os.path.join(IMAGES, rel_base))
+    os.makedirs(out_dir, exist_ok=True)
     try:
         from PIL import Image
         img = Image.open(io.BytesIO(data))
@@ -48,20 +63,20 @@ def save_small(data, base, ext):
             bg = Image.new('RGB', img.size, (255, 255, 255))
             bg.paste(img, mask=img.convert('RGBA').getchannel('A'))
             img = bg
-        img.save(os.path.join(IMAGES, base + '.jpg'), 'JPEG', quality=82, optimize=True, progressive=True)
-        return base + '.jpg'
+        img.save(os.path.join(IMAGES, rel_base + '.jpg'), 'JPEG', quality=82, optimize=True, progressive=True)
+        return rel_base + '.jpg'
     except Exception:
-        with open(os.path.join(IMAGES, base + ext), 'wb') as fh:
+        with open(os.path.join(IMAGES, rel_base + ext), 'wb') as fh:
             fh.write(data)
-        return base + ext
+        return rel_base + ext
 
 
-def extract_image(zf, base):
+def extract_image(zf, rel_base):
     names = {n.lower(): n for n in zf.namelist()}
     for want in PREFERRED:
         for low, real in names.items():
             if (low == want or (want.endswith('/') and low.startswith(want))) and low.endswith(IMAGE_EXTS):
-                return save_small(zf.read(real), base, os.path.splitext(low)[1])
+                return save_small(zf.read(real), rel_base, os.path.splitext(low)[1])
     return None
 
 
@@ -74,22 +89,16 @@ def title_of(zf):
     return html.unescape(m.group(1)).strip() if m and m.group(1).strip() else None
 
 
-def load_settings():
-    try:
-        with open('gallery-settings.json') as fh:
-            return json.load(fh)
-    except (OSError, ValueError):
-        return {}
-
-
 def clean_name(name, remove):
     for text in remove:
-        name = re.sub(re.escape(text), ' ', name, flags=re.IGNORECASE)
-    return re.sub(r'\s+', ' ', name).strip(' -') or name
+        shorter = re.sub(r'\s+', ' ', re.sub(re.escape(text), ' ', name, flags=re.IGNORECASE)).strip(' -')
+        if shorter:  # never remove the whole name
+            name = shorter
+    return name
 
 
 def order_key(entry, order):
-    stem = os.path.splitext(entry['file'])[0].lower()
+    stem = os.path.splitext(os.path.basename(entry['file']))[0].lower()
     stem = re.sub(r'\s*\(\d+\)$', '', stem)  # "santa_ams (1)" -> "santa_ams"
     for i, want in enumerate(order):
         if stem == want.lower():
@@ -97,30 +106,58 @@ def order_key(entry, order):
     return (1, 0, entry['name'].lower())
 
 
-def main():
-    settings = load_settings()
-    remove = settings.get('remove_from_names', [])
-    order = settings.get('order', [])
-    os.makedirs(IMAGES, exist_ok=True)
+def read_models(folder, remove):
+    """All .3mf files directly inside models/<folder> ('' = models/)."""
+    directory = os.path.join(MODELS, folder)
     entries = []
-    for f in sorted(os.listdir(MODELS), key=str.lower):
+    if not os.path.isdir(directory):
+        return entries
+    for f in sorted(os.listdir(directory), key=str.lower):
         if not f.lower().endswith('.3mf'):
             continue
-        base = os.path.splitext(f)[0]
-        entry = {'file': f, 'name': base.replace('_', ' ').replace('-', ' ')}
+        rel = f'{folder}/{f}' if folder else f
+        rel_base = os.path.splitext(rel)[0]
+        entry = {'file': rel, 'name': os.path.splitext(f)[0].replace('_', ' ').replace('-', ' ')}
         try:
-            with zipfile.ZipFile(os.path.join(MODELS, f)) as zf:
+            with zipfile.ZipFile(os.path.join(MODELS, rel)) as zf:
                 entry['name'] = title_of(zf) or entry['name']
-                image = existing_image(base) or extract_image(zf, base)
+                image = existing_image(rel_base) or extract_image(zf, rel_base)
         except zipfile.BadZipFile:
-            image = existing_image(base)
+            image = existing_image(rel_base)
         entry['name'] = clean_name(entry['name'], remove)
         if image:
             entry['image'] = image
         entries.append(entry)
-    entries.sort(key=lambda e: order_key(e, order))
+    return entries
+
+
+def main():
+    settings = load_settings()
+    remove = settings.get('remove_from_names', [])
+    folder_settings = settings.get('folders', {})
+    os.makedirs(IMAGES, exist_ok=True)
+
+    on_disk = [d for d in os.listdir(MODELS) if os.path.isdir(os.path.join(MODELS, d)) and not d.startswith('.')]
+    names = [f for f in folder_settings if f in on_disk]
+    names += sorted((d for d in on_disk if d not in folder_settings), key=str.lower)
+
+    folders = []
+    for name in names:
+        cfg = folder_settings.get(name, {})
+        models = read_models(name, remove + cfg.get('remove_from_names', []))
+        if not models:
+            continue
+        models.sort(key=lambda e: order_key(e, cfg.get('order', [])))
+        folder = {'name': name, 'models': models}
+        if cfg.get('outline'):
+            folder['outline'] = cfg['outline']
+        folders.append(folder)
+
+    loose = read_models('', remove)
+    loose.sort(key=lambda e: order_key(e, settings.get('order', [])))
+
     with open(os.path.join(MODELS, 'models.json'), 'w') as fh:
-        json.dump(entries, fh, indent=2, ensure_ascii=False)
+        json.dump({'folders': folders, 'models': loose}, fh, indent=2, ensure_ascii=False)
         fh.write('\n')
 
 

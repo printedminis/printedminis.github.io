@@ -1,15 +1,26 @@
 {
   "remove_from_names": ["Knitted ", " - Christmas"],
 
-  "order": [
-    "santa_ams",
-    "mrsclaus_ams",
-    "reindeer_ams",
-    "SantaHat",
-    "tree_ams",
-    "penguin_ams",
-    "polarbearsanta_ams",
-    "santa_cat_ams",
-    "santadog_ams"
-  ]
+  "folders": {
+    "Christmas": {
+      "outline": "#d62828",
+      "order": [
+        "santa_ams",
+        "mrsclaus_ams",
+        "reindeer_ams",
+        "SantaHat",
+        "tree_ams",
+        "penguin_ams",
+        "polarbearsanta_ams",
+        "santa_cat_ams",
+        "santadog_ams"
+      ]
+    },
+    "Dogs": {
+      "outline": "#ffffff",
+      "remove_from_names": [" Dog"]
+    }
+  },
+
+  "order": []
 }

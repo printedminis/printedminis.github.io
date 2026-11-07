@@ -1,9 +1,11 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 
-// Models live in "models/", their pictures in "images/". models/models.json
-// lists them and is rebuilt automatically by a GitHub Action, as entries like:
-//   { "file": "LeafAMS.3mf", "name": "Knitted Maple Leaf", "image": "LeafAMS.png" }
+// Models live in "models/" (optionally in sub-folders like models/Dogs/), and
+// their pictures in "images/" at the same path. models/models.json is rebuilt
+// automatically by a GitHub Action:
+//   { "folders": [{ "name": "Dogs", "outline": "#fff", "models": [...] }],
+//     "models": [ { "file": "x.3mf", "name": "X", "image": "x.jpg" } ] }
 const MODELS_DIR = 'models/';
 const IMAGES_DIR = 'images/';
 
@@ -16,6 +18,34 @@ const viewerName = $('viewer-name');
 const viewerStatus = $('viewer-status');
 const progressBar = $('progress-bar');
 const plateBar = $('plate-bar');
+const pageTitle = $('page-title');
+const pageSub = $('page-sub');
+const homeLink = $('home-link');
+
+const urlFor = (dir, path) => dir + path.split('/').map(encodeURIComponent).join('/');
+
+// --- Light / dark theme ----------------------------------------------------
+
+const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+const themeBtn = $('theme-btn');
+
+function currentTheme() { return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'; }
+function paintThemeButton() {
+  const dark = currentTheme() === 'dark';
+  themeBtn.innerHTML = dark ? SUN : MOON;
+  themeBtn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+}
+themeBtn.addEventListener('click', () => {
+  const next = currentTheme() === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('theme', next); } catch { /* private mode */ }
+  paintThemeButton();
+  if (viewer) applyViewerTheme();
+});
+paintThemeButton();
+
+const cssVar = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
 // --- Loading models in a background worker -------------------------------
 
@@ -36,7 +66,7 @@ const loaded = new Map(); // file -> Promise<result>
 function loadModel(file, onProgress = () => {}) {
   if (loaded.has(file)) return loaded.get(file);
   const promise = (async () => {
-    const res = await fetch(MODELS_DIR + encodeURIComponent(file));
+    const res = await fetch(urlFor(MODELS_DIR, file));
     if (!res.ok) throw new Error(`Couldn't find ${file} in the models folder.`);
     const total = +res.headers.get('content-length') || 0;
     let buffer;
@@ -63,7 +93,7 @@ function loadModel(file, onProgress = () => {}) {
     return new Promise((resolve, reject) => {
       const id = nextId++;
       pending.set(id, { resolve, reject, onStage: (s) => onProgress(1, s) });
-      worker.postMessage({ id, buffer, fileName: file }, [buffer]);
+      worker.postMessage({ id, buffer, fileName: file.split('/').pop() }, [buffer]);
     });
   })();
   loaded.set(file, promise);
@@ -81,8 +111,8 @@ const material = new THREE.MeshStandardMaterial({
   side: THREE.DoubleSide,
 });
 
-// Build one Object3D for the chosen plate (or all plates packed in a row),
-// rotated Y-up, sitting on the ground and centered on the origin.
+// One Object3D for the chosen plate (or all plates packed in a row), rotated
+// Y-up, sitting on the ground and centered on the origin.
 function buildObject(result, plateIndex) {
   const group = new THREE.Group();
   const list = plateIndex === 'all' ? result.plates : [result.plates[plateIndex]];
@@ -141,63 +171,137 @@ function frameCamera(camera, size, controls) {
   }
 }
 
-// --- Gallery --------------------------------------------------------------
+// --- Gallery data ----------------------------------------------------------
 
 function normalizeEntry(e) {
   if (typeof e === 'string') e = { file: e };
   if (!e || typeof e.file !== 'string' || !/\.3mf$/i.test(e.file)) return null;
-  return { file: e.file, name: e.name || e.file.replace(/\.3mf$/i, ''), image: e.image || null };
+  const base = e.file.split('/').pop().replace(/\.3mf$/i, '');
+  return { file: e.file, name: e.name || base, image: e.image || null };
 }
 
-async function buildGallery() {
-  let entries;
-  try {
-    const res = await fetch(MODELS_DIR + 'models.json', { cache: 'no-cache' });
-    entries = (await res.json()).map(normalizeEntry).filter(Boolean);
-  } catch {
-    galleryStatus.textContent = 'Could not read models/models.json.';
-    galleryStatus.classList.add('error');
-    return;
+let catalog = null; // { folders: [{ name, outline, models }], models: [] }
+const modelIndex = new Map(); // file -> { entry, folder }
+
+async function loadCatalog() {
+  const res = await fetch(MODELS_DIR + 'models.json', { cache: 'no-cache' });
+  const data = await res.json();
+  if (Array.isArray(data)) return { folders: [], models: data.map(normalizeEntry).filter(Boolean) };
+  return {
+    folders: (data.folders || [])
+      .map((f) => ({ name: String(f.name), outline: f.outline || null, models: (f.models || []).map(normalizeEntry).filter(Boolean) }))
+      .filter((f) => f.models.length),
+    models: (data.models || []).map(normalizeEntry).filter(Boolean),
+  };
+}
+
+// --- Gallery rendering -----------------------------------------------------
+
+const FOLDER_ICON = '<svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4.6l2 2.5h8.4A1.5 1.5 0 0 1 21 9v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/></svg>';
+
+function imageEl(entry) {
+  const img = document.createElement('img');
+  img.src = urlFor(IMAGES_DIR, entry.image);
+  img.alt = '';
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  return img;
+}
+
+function applyOutline(card, color) {
+  if (!color) return;
+  card.classList.add('outlined');
+  card.style.setProperty('--outline', color);
+}
+
+function modelCard(entry, outline) {
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  a.className = 'card';
+  a.href = '#/model/' + encodeURIComponent(entry.file);
+  applyOutline(a, outline);
+  const thumb = document.createElement('span');
+  thumb.className = 'thumb';
+  const name = document.createElement('span');
+  name.className = 'card-name';
+  name.textContent = entry.name;
+  if (entry.image) {
+    const img = imageEl(entry);
+    img.alt = entry.name;
+    img.onerror = () => { img.remove(); renderPreview(entry, thumb); };
+    thumb.append(img);
+  } else {
+    queuePreview(entry, thumb);
   }
-  if (!entries.length) {
-    galleryStatus.textContent = 'No models yet. Upload .3mf files to the models folder, then refresh in a minute.';
-    return;
-  }
+  a.append(thumb, name);
+  li.append(a);
+  return li;
+}
+
+function folderCard(folder) {
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  a.className = 'card';
+  a.href = '#/folder/' + encodeURIComponent(folder.name);
+  applyOutline(a, folder.outline);
+  const thumb = document.createElement('span');
+  const covers = folder.models.filter((m) => m.image).slice(0, 4);
+  thumb.className = 'thumb collage' + (covers.length < 4 ? ' one' : '');
+  for (const m of covers.length < 4 ? covers.slice(0, 1) : covers) thumb.append(imageEl(m));
+  const name = document.createElement('span');
+  name.className = 'card-name';
+  name.innerHTML = FOLDER_ICON;
+  const label = document.createElement('span');
+  label.textContent = folder.name;
+  const count = document.createElement('span');
+  count.className = 'count';
+  count.textContent = `${folder.models.length} model${folder.models.length === 1 ? '' : 's'}`;
+  name.append(label, count);
+  a.append(thumb, name);
+  a.setAttribute('aria-label', `${folder.name} folder, ${count.textContent}`);
+  li.append(a);
+  return li;
+}
+
+function showHome() {
+  pageTitle.textContent = '3D Printed Minis';
+  pageSub.textContent = catalog.folders.length ? 'Open a folder, or click a model to view it in 3D.' : 'Click a model to view it in 3D.';
+  homeLink.hidden = true;
+  document.title = '3D Printed Minis';
+  grid.replaceChildren(
+    ...catalog.folders.map(folderCard),
+    ...catalog.models.map((m) => modelCard(m, null)),
+  );
+  galleryStatus.textContent = grid.children.length ? '' : 'No models yet. Upload .3mf files to the models folder, then refresh in a minute.';
+}
+
+function showFolder(folder) {
+  pageTitle.textContent = folder.name;
+  pageSub.textContent = `${folder.models.length} model${folder.models.length === 1 ? '' : 's'} · click one to view it in 3D.`;
+  homeLink.hidden = false;
+  document.title = `${folder.name} · 3D Printed Minis`;
+  grid.replaceChildren(...folder.models.map((m) => modelCard(m, folder.outline)));
   galleryStatus.textContent = '';
-
-  const missingImages = [];
-  for (const entry of entries) {
-    const li = document.createElement('li');
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'card';
-    const thumb = document.createElement('span');
-    thumb.className = 'thumb';
-    const name = document.createElement('span');
-    name.className = 'card-name';
-    name.textContent = entry.name;
-    if (entry.image) {
-      const img = document.createElement('img');
-      img.src = IMAGES_DIR + encodeURIComponent(entry.image);
-      img.alt = entry.name;
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.onerror = () => { img.remove(); missingImage(entry, thumb); };
-      thumb.append(img);
-    } else {
-      missingImages.push([entry, thumb]);
-    }
-    btn.append(thumb, name);
-    btn.addEventListener('click', () => openViewer(entry));
-    li.append(btn);
-    grid.append(li);
-  }
-  for (const [entry, thumb] of missingImages) await missingImage(entry, thumb);
 }
 
-// No picture for this model: render one from the model itself.
+// Pictures made from the model itself, for models without an image.
 let thumbRenderer = null;
-async function missingImage(entry, thumb) {
+const previewQueue = [];
+let previewBusy = false;
+function queuePreview(entry, thumb) {
+  thumb.textContent = 'Making preview…';
+  previewQueue.push([entry, thumb]);
+  if (!previewBusy) runPreviews();
+}
+async function runPreviews() {
+  previewBusy = true;
+  while (previewQueue.length) {
+    const [entry, thumb] = previewQueue.shift();
+    if (thumb.isConnected) await renderPreview(entry, thumb);
+  }
+  previewBusy = false;
+}
+async function renderPreview(entry, thumb) {
   thumb.textContent = 'Making preview…';
   try {
     const result = await loadModel(entry.file);
@@ -206,7 +310,7 @@ async function missingImage(entry, thumb) {
       thumbRenderer.setSize(640, 480, false);
     }
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x2a2e37);
+    scene.background = new THREE.Color(cssVar('--thumb'));
     makeLights(scene);
     const { object, size } = buildObject(result, result.plates.length > 1 ? 'all' : 0);
     scene.add(object);
@@ -234,7 +338,6 @@ function setupViewer() {
   container.append(renderer.domElement);
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x15171c);
   makeLights(scene);
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 1000);
 
@@ -270,6 +373,21 @@ function setupViewer() {
   return v;
 }
 
+function makeGrid(size) {
+  const span = Math.max(size.x, size.z) * 1.8;
+  return new THREE.GridHelper(span, 18, new THREE.Color(cssVar('--grid-main')), new THREE.Color(cssVar('--grid-line')));
+}
+
+function applyViewerTheme() {
+  viewer.scene.background = new THREE.Color(cssVar('--viewer-bg'));
+  if (viewer.grid && viewer.size) {
+    viewer.scene.remove(viewer.grid);
+    viewer.grid.geometry.dispose();
+    viewer.grid = makeGrid(viewer.size);
+    viewer.scene.add(viewer.grid);
+  }
+}
+
 function showPlate(plateIndex) {
   const v = viewer;
   if (v.object) v.scene.remove(v.object);
@@ -278,8 +396,7 @@ function showPlate(plateIndex) {
   v.object = object;
   v.size = size;
   v.scene.add(object);
-  const span = Math.max(size.x, size.z) * 1.8;
-  v.grid = new THREE.GridHelper(span, 18, 0x4a505c, 0x2c3038);
+  v.grid = makeGrid(size);
   v.scene.add(v.grid);
   frameCamera(v.camera, size, v.controls);
   for (const b of plateBar.querySelectorAll('button')) {
@@ -313,12 +430,15 @@ function setProgress(fraction, label) {
 let openToken = 0;
 async function openViewer(entry) {
   if (!viewer) viewer = setupViewer();
+  applyViewerTheme();
   const token = ++openToken;
   galleryView.hidden = true;
   viewerView.hidden = false;
+  document.body.classList.add('viewing');
   viewer.resize();
   viewer.start();
   viewerName.textContent = entry.name;
+  document.title = `${entry.name} · 3D Printed Minis`;
   plateBar.hidden = true;
   if (viewer.object) { viewer.scene.remove(viewer.object); viewer.object = null; }
   if (viewer.grid) { viewer.scene.remove(viewer.grid); viewer.grid = null; }
@@ -328,7 +448,6 @@ async function openViewer(entry) {
     const result = await loadModel(entry.file, (f, label) => token === openToken && setProgress(f, label));
     if (token !== openToken) return;
     viewer.result = result;
-    viewerName.textContent = result.designer ? `${result.name} — by ${result.designer}` : result.name;
     renderPlateButtons(result);
     showPlate(result.plates.length > 1 ? 'all' : 0);
     viewerStatus.textContent = '';
@@ -342,19 +461,64 @@ async function openViewer(entry) {
   }
 }
 
-function closeViewer() {
+function hideViewer() {
   openToken++;
   viewerView.hidden = true;
   galleryView.hidden = false;
+  document.body.classList.remove('viewing');
   if (viewer) viewer.stop();
 }
 
-$('back-btn').addEventListener('click', closeViewer);
+// --- Routing: #/folder/<name> and #/model/<path> ---------------------------
+
+let navigatedInApp = false;
+let parentHash = '#';
+
+function route() {
+  if (!catalog) return;
+  const hash = location.hash;
+  const [, kind, raw] = hash.match(/^#\/(folder|model)\/(.+)$/) || [];
+  const value = raw ? decodeURIComponent(raw) : null;
+
+  if (kind === 'model' && modelIndex.has(value)) {
+    const { entry, folder } = modelIndex.get(value);
+    parentHash = folder ? '#/folder/' + encodeURIComponent(folder.name) : '#';
+    if (folder) showFolder(folder); else showHome();
+    openViewer(entry);
+    return;
+  }
+  hideViewer();
+  const folder = kind === 'folder' && catalog.folders.find((f) => f.name === value);
+  if (folder) showFolder(folder); else showHome();
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener('hashchange', () => { navigatedInApp = true; route(); });
+
+function goBack() {
+  // Use the browser's history when we got here by clicking, so the gallery
+  // keeps its scroll position; otherwise jump straight to the parent page.
+  if (navigatedInApp && history.length > 1) history.back();
+  else location.hash = parentHash;
+}
+
+$('back-btn').addEventListener('click', goBack);
 $('reset-btn').addEventListener('click', () => {
   if (viewer && viewer.size) frameCamera(viewer.camera, viewer.size, viewer.controls);
 });
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && !viewerView.hidden) closeViewer();
+  if (e.key === 'Escape' && !viewerView.hidden) goBack();
 });
 
-buildGallery();
+(async () => {
+  try {
+    catalog = await loadCatalog();
+  } catch {
+    galleryStatus.textContent = 'Could not read models/models.json.';
+    galleryStatus.classList.add('error');
+    return;
+  }
+  for (const folder of catalog.folders) for (const m of folder.models) modelIndex.set(m.file, { entry: m, folder });
+  for (const m of catalog.models) modelIndex.set(m.file, { entry: m, folder: null });
+  route();
+})();
