@@ -494,6 +494,21 @@
         }
       ],
       "outline": "#eab308"
+    },
+    {
+      "name": "Safari",
+      "models": [
+        {
+          "file": "Safari/Giraffe_ams.3mf",
+          "name": "Giraffe",
+          "image": "Safari/Giraffe_ams.jpg"
+        },
+        {
+          "file": "Safari/lion.3mf",
+          "name": "Lion",
+          "image": "Safari/lion.jpg"
+        }
+      ]
     }
   ],
   "models": [
