@@ -1,5 +1,16 @@
 {
-  "remove_from_names": ["Knitted ", " - Christmas"],
+  "remove_from_names": [
+    "Knitted ",
+    " - Christmas",
+    " - Easter",
+    " - Valentine's Day",
+    "Valentine's Day "
+  ],
+
+  "names": {
+    "OtterSplit": "Otter (Separate Parts)",
+    "robin_ams": "Robin"
+  },
 
   "folders": {
     "Christmas": {
@@ -19,7 +30,15 @@
     "Dogs": {
       "outline": "#ffffff",
       "remove_from_names": [" Dog"]
-    }
+    },
+    "Valentine's Day": { "outline": "#ec4899" },
+    "Easter": { "outline": "#a78bfa" },
+    "Farm": { "outline": "#a16207" },
+    "Woodland": { "outline": "#15803d" },
+    "Jungle & Safari": { "outline": "#f97316" },
+    "Sea & River": { "outline": "#2563eb" },
+    "Birds": { "outline": "#38bdf8" },
+    "Bugs": { "outline": "#eab308" }
   },
 
   "order": []

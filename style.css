@@ -154,6 +154,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   place-items: stretch;
 }
 .thumb.collage.one { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+.thumb.collage.two { grid-template-rows: 1fr; }
 .thumb.collage img { min-height: 0; }
 
 .card-name {
