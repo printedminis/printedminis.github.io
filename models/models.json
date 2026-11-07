@@ -342,6 +342,11 @@
       "name": "Birds",
       "models": [
         {
+          "file": "Birds/cardinal_ams.3mf",
+          "name": "Cardinal Bird",
+          "image": "Birds/cardinal_ams.jpg"
+        },
+        {
           "file": "Birds/CrowAMS.3mf",
           "name": "Crow",
           "image": "Birds/CrowAMS.jpg"
@@ -362,9 +367,19 @@
           "image": "Birds/GooseAMS.jpg"
         },
         {
+          "file": "Birds/PenguinAMS.3mf",
+          "name": "Penguin",
+          "image": "Birds/PenguinAMS.jpg"
+        },
+        {
           "file": "Birds/robin_ams.3mf",
           "name": "Robin",
           "image": "Birds/robin_ams.jpg"
+        },
+        {
+          "file": "Birds/macaw_ams.3mf",
+          "name": "Scarlet Macaw Parrot",
+          "image": "Birds/macaw_ams.jpg"
         },
         {
           "file": "Birds/SwanAMS.3mf",
@@ -391,5 +406,11 @@
       "outline": "#eab308"
     }
   ],
-  "models": []
+  "models": [
+    {
+      "file": "OwlAMS.3mf",
+      "name": "Owl",
+      "image": "OwlAMS.jpg"
+    }
+  ]
 }
