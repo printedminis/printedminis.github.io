@@ -1,67 +1,152 @@
-[
-  {
-    "file": "santa_ams (1).3mf",
-    "name": "Santa Claus",
-    "image": "santa_ams (1).jpg"
-  },
-  {
-    "file": "mrsclaus_ams.3mf",
-    "name": "Mrs. Claus",
-    "image": "mrsclaus_ams.jpg"
-  },
-  {
-    "file": "reindeer_ams.3mf",
-    "name": "Reindeer",
-    "image": "reindeer_ams.jpg"
-  },
-  {
-    "file": "SantaHat.3mf",
-    "name": "Mini Santa Hat",
-    "image": "SantaHat.jpg"
-  },
-  {
-    "file": "tree_ams (1).3mf",
-    "name": "Christmas Tree",
-    "image": "tree_ams (1).jpg"
-  },
-  {
-    "file": "penguin_ams.3mf",
-    "name": "Penguin with Santa Hat",
-    "image": "penguin_ams.jpg"
-  },
-  {
-    "file": "polarbearsanta_ams.3mf",
-    "name": "Polar Bear with Santa Hat",
-    "image": "polarbearsanta_ams.jpg"
-  },
-  {
-    "file": "santa_cat_ams.3mf",
-    "name": "Cat with Santa Hat",
-    "image": "santa_cat_ams.jpg"
-  },
-  {
-    "file": "santadog_ams.3mf",
-    "name": "Dog with Santa Hat",
-    "image": "santadog_ams.jpg"
-  },
-  {
-    "file": "babypolarbear.3mf",
-    "name": "Baby Polar Bear",
-    "image": "babypolarbear.jpg"
-  },
-  {
-    "file": "christmas_gnome_ams.3mf",
-    "name": "Christmas Gnome",
-    "image": "christmas_gnome_ams.jpg"
-  },
-  {
-    "file": "gingerbreadman_ams.3mf",
-    "name": "Gingerbread Man",
-    "image": "gingerbreadman_ams.jpg"
-  },
-  {
-    "file": "SnowmanAMs.3mf",
-    "name": "Snowman",
-    "image": "SnowmanAMs.jpg"
-  }
-]
+{
+  "folders": [
+    {
+      "name": "Christmas",
+      "models": [
+        {
+          "file": "Christmas/santa_ams (1).3mf",
+          "name": "Santa Claus",
+          "image": "Christmas/santa_ams (1).jpg"
+        },
+        {
+          "file": "Christmas/mrsclaus_ams.3mf",
+          "name": "Mrs. Claus",
+          "image": "Christmas/mrsclaus_ams.jpg"
+        },
+        {
+          "file": "Christmas/reindeer_ams.3mf",
+          "name": "Reindeer",
+          "image": "Christmas/reindeer_ams.jpg"
+        },
+        {
+          "file": "Christmas/SantaHat.3mf",
+          "name": "Mini Santa Hat",
+          "image": "Christmas/SantaHat.jpg"
+        },
+        {
+          "file": "Christmas/tree_ams (1).3mf",
+          "name": "Christmas Tree",
+          "image": "Christmas/tree_ams (1).jpg"
+        },
+        {
+          "file": "Christmas/penguin_ams.3mf",
+          "name": "Penguin with Santa Hat",
+          "image": "Christmas/penguin_ams.jpg"
+        },
+        {
+          "file": "Christmas/polarbearsanta_ams.3mf",
+          "name": "Polar Bear with Santa Hat",
+          "image": "Christmas/polarbearsanta_ams.jpg"
+        },
+        {
+          "file": "Christmas/santa_cat_ams.3mf",
+          "name": "Cat with Santa Hat",
+          "image": "Christmas/santa_cat_ams.jpg"
+        },
+        {
+          "file": "Christmas/santadog_ams.3mf",
+          "name": "Dog with Santa Hat",
+          "image": "Christmas/santadog_ams.jpg"
+        },
+        {
+          "file": "Christmas/babypolarbear.3mf",
+          "name": "Baby Polar Bear",
+          "image": "Christmas/babypolarbear.jpg"
+        },
+        {
+          "file": "Christmas/christmas_gnome_ams.3mf",
+          "name": "Christmas Gnome",
+          "image": "Christmas/christmas_gnome_ams.jpg"
+        },
+        {
+          "file": "Christmas/gingerbreadman_ams.3mf",
+          "name": "Gingerbread Man",
+          "image": "Christmas/gingerbreadman_ams.jpg"
+        },
+        {
+          "file": "Christmas/SnowmanAMs.3mf",
+          "name": "Snowman",
+          "image": "Christmas/SnowmanAMs.jpg"
+        }
+      ],
+      "outline": "#d62828"
+    },
+    {
+      "name": "Dogs",
+      "models": [
+        {
+          "file": "Dogs/BichonFriseAMS.3mf",
+          "name": "Bichon Frise",
+          "image": "Dogs/BichonFriseAMS.jpg"
+        },
+        {
+          "file": "Dogs/BorderCollieAMS.3mf",
+          "name": "Border Collie",
+          "image": "Dogs/BorderCollieAMS.jpg"
+        },
+        {
+          "file": "Dogs/CavalierAMS.3mf",
+          "name": "Cavalier King Charles Spaniel",
+          "image": "Dogs/CavalierAMS.jpg"
+        },
+        {
+          "file": "Dogs/ChihuahuaAMS.3mf",
+          "name": "Chihuahua",
+          "image": "Dogs/ChihuahuaAMS.jpg"
+        },
+        {
+          "file": "Dogs/CockerSpanielAMS.3mf",
+          "name": "Cocker Spaniel",
+          "image": "Dogs/CockerSpanielAMS.jpg"
+        },
+        {
+          "file": "Dogs/CorgiAMS.3mf",
+          "name": "Corgi",
+          "image": "Dogs/CorgiAMS.jpg"
+        },
+        {
+          "file": "Dogs/DachshundAMS.3mf",
+          "name": "Dachshund",
+          "image": "Dogs/DachshundAMS.jpg"
+        },
+        {
+          "file": "Dogs/dog.3mf",
+          "name": "Dog",
+          "image": "Dogs/dog.jpg"
+        },
+        {
+          "file": "Dogs/GermanShepherdAMS.3mf",
+          "name": "German Shepherd",
+          "image": "Dogs/GermanShepherdAMS.jpg"
+        },
+        {
+          "file": "Dogs/RetrieverAMS.3mf",
+          "name": "Golden Retriever",
+          "image": "Dogs/RetrieverAMS.jpg"
+        },
+        {
+          "file": "Dogs/GreyhoundAMS.3mf",
+          "name": "Greyhound",
+          "image": "Dogs/GreyhoundAMS.jpg"
+        },
+        {
+          "file": "Dogs/PoodleAMS.3mf",
+          "name": "Poodle",
+          "image": "Dogs/PoodleAMS.jpg"
+        },
+        {
+          "file": "Dogs/RottweilerAMS.3mf",
+          "name": "Rottweiler",
+          "image": "Dogs/RottweilerAMS.jpg"
+        },
+        {
+          "file": "Dogs/WestieAMS.3mf",
+          "name": "Westie",
+          "image": "Dogs/WestieAMS.jpg"
+        }
+      ],
+      "outline": "#ffffff"
+    }
+  ],
+  "models": []
+}
