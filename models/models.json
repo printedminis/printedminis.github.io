@@ -280,11 +280,6 @@
           "image": "Jungle & Safari/ChameleonAMS.jpg"
         },
         {
-          "file": "Jungle & Safari/croc.3mf",
-          "name": "Crocodile",
-          "image": "Jungle & Safari/croc.jpg"
-        },
-        {
           "file": "Jungle & Safari/FrogAMS.3mf",
           "name": "Frog",
           "image": "Jungle & Safari/FrogAMS.jpg"
@@ -313,11 +308,6 @@
           "file": "Jungle & Safari/lion.3mf",
           "name": "Lion",
           "image": "Jungle & Safari/lion.jpg"
-        },
-        {
-          "file": "Jungle & Safari/monkey.3mf",
-          "name": "Monkey",
-          "image": "Jungle & Safari/monkey.jpg"
         },
         {
           "file": "Jungle & Safari/panda.3mf",
