@@ -50,9 +50,54 @@
     "image": "babypolarbear.jpg"
   },
   {
+    "file": "BichonFriseAMS.3mf",
+    "name": "Bichon Frise Dog",
+    "image": "BichonFriseAMS.jpg"
+  },
+  {
+    "file": "BorderCollieAMS.3mf",
+    "name": "Border Collie Dog",
+    "image": "BorderCollieAMS.jpg"
+  },
+  {
+    "file": "CavalierAMS.3mf",
+    "name": "Cavalier King Charles Spaniel Dog",
+    "image": "CavalierAMS.jpg"
+  },
+  {
+    "file": "ChihuahuaAMS.3mf",
+    "name": "Chihuahua Dog",
+    "image": "ChihuahuaAMS.jpg"
+  },
+  {
     "file": "christmas_gnome_ams.3mf",
     "name": "Christmas Gnome",
     "image": "christmas_gnome_ams.jpg"
+  },
+  {
+    "file": "CockerSpanielAMS.3mf",
+    "name": "Cocker Spaniel Dog",
+    "image": "CockerSpanielAMS.jpg"
+  },
+  {
+    "file": "CorgiAMS.3mf",
+    "name": "Corgi Dog",
+    "image": "CorgiAMS.jpg"
+  },
+  {
+    "file": "DachshundAMS.3mf",
+    "name": "Dachshund Dog",
+    "image": "DachshundAMS.jpg"
+  },
+  {
+    "file": "dog.3mf",
+    "name": "Dog",
+    "image": "dog.jpg"
+  },
+  {
+    "file": "GermanShepherdAMS.3mf",
+    "name": "German Shepherd Dog",
+    "image": "GermanShepherdAMS.jpg"
   },
   {
     "file": "gingerbreadman_ams.3mf",
@@ -60,8 +105,33 @@
     "image": "gingerbreadman_ams.jpg"
   },
   {
+    "file": "RetrieverAMS.3mf",
+    "name": "Golden Retriever Dog",
+    "image": "RetrieverAMS.jpg"
+  },
+  {
+    "file": "GreyhoundAMS.3mf",
+    "name": "Greyhound Dog",
+    "image": "GreyhoundAMS.jpg"
+  },
+  {
+    "file": "PoodleAMS.3mf",
+    "name": "Poodle Dog",
+    "image": "PoodleAMS.jpg"
+  },
+  {
+    "file": "RottweilerAMS.3mf",
+    "name": "Rottweiler Dog",
+    "image": "RottweilerAMS.jpg"
+  },
+  {
     "file": "SnowmanAMs.3mf",
     "name": "Snowman",
     "image": "SnowmanAMs.jpg"
+  },
+  {
+    "file": "WestieAMS.3mf",
+    "name": "Westie Dog",
+    "image": "WestieAMS.jpg"
   }
 ]
