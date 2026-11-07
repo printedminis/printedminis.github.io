@@ -280,6 +280,11 @@
           "image": "Jungle & Safari/ChameleonAMS.jpg"
         },
         {
+          "file": "Jungle & Safari/Giraffe_ams.3mf",
+          "name": "Giraffe",
+          "image": "Jungle & Safari/Giraffe_ams.jpg"
+        },
+        {
           "file": "Jungle & Safari/gorilla2.3mf",
           "name": "Gorilla",
           "image": "Jungle & Safari/gorilla2.jpg"
@@ -288,6 +293,16 @@
           "file": "Jungle & Safari/KangarooAMS.3mf",
           "name": "Kangaroo",
           "image": "Jungle & Safari/KangarooAMS.jpg"
+        },
+        {
+          "file": "Jungle & Safari/lion.3mf",
+          "name": "Lion",
+          "image": "Jungle & Safari/lion.jpg"
+        },
+        {
+          "file": "Jungle & Safari/monkey.3mf",
+          "name": "Monkey",
+          "image": "Jungle & Safari/monkey.jpg"
         },
         {
           "file": "Jungle & Safari/PantherAMS.3mf",
