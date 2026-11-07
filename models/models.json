@@ -143,11 +143,5 @@
       "outline": "#ffffff"
     }
   ],
-  "models": [
-    {
-      "file": "babypolarbear.3mf",
-      "name": "Baby Polar Bear",
-      "image": "babypolarbear.jpg"
-    }
-  ]
+  "models": []
 }
