@@ -245,9 +245,15 @@ function folderCard(folder) {
   a.href = '#/folder/' + encodeURIComponent(folder.name);
   applyOutline(a, folder.outline);
   const thumb = document.createElement('span');
-  const covers = folder.models.filter((m) => m.image).slice(0, 4);
-  thumb.className = 'thumb collage' + (covers.length < 4 ? ' one' : '');
-  for (const m of covers.length < 4 ? covers.slice(0, 1) : covers) thumb.append(imageEl(m));
+  const withImages = folder.models.filter((m) => m.image);
+  // 4+ models: 2x2 collage, 2-3: two side by side, 1: a single picture.
+  const covers = withImages.slice(0, withImages.length >= 4 ? 4 : Math.min(withImages.length, 2));
+  thumb.className = 'thumb collage' + (covers.length === 2 ? ' two' : covers.length < 2 ? ' one' : '');
+  for (const m of covers) {
+    const img = imageEl(m);
+    img.loading = 'eager';
+    thumb.append(img);
+  }
   const name = document.createElement('span');
   name.className = 'card-name';
   name.innerHTML = FOLDER_ICON;

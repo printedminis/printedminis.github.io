@@ -27,6 +27,8 @@ delete the old one.
 
 ## Settings (`gallery-settings.json`)
 - `remove_from_names`: text cut out of every name, e.g. `"Knitted "`.
+- `names`: exact names for single models, by file name without `.3mf`, e.g.
+  `"OtterSplit": "Otter (Separate Parts)"`.
 - `folders`: per folder, in the order they appear on the home page:
   - `outline`: card outline color, e.g. `"#d62828"` (red) or `"#ffffff"` (white).
   - `order`: model file names (without `.3mf`) in display order. Unlisted models

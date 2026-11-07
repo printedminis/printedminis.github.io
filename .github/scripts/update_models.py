@@ -11,6 +11,7 @@ kept, so you can upload your own. Otherwise the best picture stored inside the
 
 gallery-settings.json (optional):
   "remove_from_names": text cut out of every model name.
+  "names": { "<file name without .3mf>": "Exact name to show" }.
   "order": file names (without .3mf) in display order for the home page.
   "folders": { "<Folder>": { "outline": "#hex", "order": [...],
                              "remove_from_names": [...] } }
@@ -89,24 +90,33 @@ def title_of(zf):
     return html.unescape(m.group(1)).strip() if m and m.group(1).strip() else None
 
 
+SMALL_WORDS = ('with', 'and', 'of', 'the', 'in', 'on', 'a')
+
+
 def clean_name(name, remove):
     for text in remove:
         shorter = re.sub(r'\s+', ' ', re.sub(re.escape(text), ' ', name, flags=re.IGNORECASE)).strip(' -')
         if shorter:  # never remove the whole name
             name = shorter
-    return name
+    # "Bunny With Carrot" -> "Bunny with Carrot"
+    words = name.split(' ')
+    return ' '.join(w.lower() if i and w.lower() in SMALL_WORDS else w for i, w in enumerate(words))
+
+
+def stem_of(file_name):
+    stem = os.path.splitext(os.path.basename(file_name))[0]
+    return re.sub(r'\s*\(\d+\)$', '', stem)  # "santa_ams (1)" -> "santa_ams"
 
 
 def order_key(entry, order):
-    stem = os.path.splitext(os.path.basename(entry['file']))[0].lower()
-    stem = re.sub(r'\s*\(\d+\)$', '', stem)  # "santa_ams (1)" -> "santa_ams"
+    stem = stem_of(entry['file']).lower()
     for i, want in enumerate(order):
         if stem == want.lower():
             return (0, i, '')
     return (1, 0, entry['name'].lower())
 
 
-def read_models(folder, remove):
+def read_models(folder, remove, overrides):
     """All .3mf files directly inside models/<folder> ('' = models/)."""
     directory = os.path.join(MODELS, folder)
     entries = []
@@ -124,7 +134,7 @@ def read_models(folder, remove):
                 image = existing_image(rel_base) or extract_image(zf, rel_base)
         except zipfile.BadZipFile:
             image = existing_image(rel_base)
-        entry['name'] = clean_name(entry['name'], remove)
+        entry['name'] = overrides.get(stem_of(f).lower()) or clean_name(entry['name'], remove)
         if image:
             entry['image'] = image
         entries.append(entry)
@@ -135,6 +145,7 @@ def main():
     settings = load_settings()
     remove = settings.get('remove_from_names', [])
     folder_settings = settings.get('folders', {})
+    overrides = {k.lower(): v for k, v in settings.get('names', {}).items()}
     os.makedirs(IMAGES, exist_ok=True)
 
     on_disk = [d for d in os.listdir(MODELS) if os.path.isdir(os.path.join(MODELS, d)) and not d.startswith('.')]
@@ -144,7 +155,7 @@ def main():
     folders = []
     for name in names:
         cfg = folder_settings.get(name, {})
-        models = read_models(name, remove + cfg.get('remove_from_names', []))
+        models = read_models(name, remove + cfg.get('remove_from_names', []), overrides)
         if not models:
             continue
         models.sort(key=lambda e: order_key(e, cfg.get('order', [])))
@@ -153,7 +164,7 @@ def main():
             folder['outline'] = cfg['outline']
         folders.append(folder)
 
-    loose = read_models('', remove)
+    loose = read_models('', remove, overrides)
     loose.sort(key=lambda e: order_key(e, settings.get('order', [])))
 
     with open(os.path.join(MODELS, 'models.json'), 'w') as fh:

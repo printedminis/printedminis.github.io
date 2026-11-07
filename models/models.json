@@ -146,6 +146,249 @@
         }
       ],
       "outline": "#ffffff"
+    },
+    {
+      "name": "Valentine's Day",
+      "models": [
+        {
+          "file": "Valentine's Day/heartcat_ams.3mf",
+          "name": "Cat with Heart",
+          "image": "Valentine's Day/heartcat_ams.jpg"
+        },
+        {
+          "file": "Valentine's Day/ElephantHeartAMS.3mf",
+          "name": "Elephant Blowing Heart",
+          "image": "Valentine's Day/ElephantHeartAMS.jpg"
+        },
+        {
+          "file": "Valentine's Day/otter_ams.3mf",
+          "name": "Otter with Heart",
+          "image": "Valentine's Day/otter_ams.jpg"
+        },
+        {
+          "file": "Valentine's Day/snail_ams.3mf",
+          "name": "Snail",
+          "image": "Valentine's Day/snail_ams.jpg"
+        }
+      ],
+      "outline": "#ec4899"
+    },
+    {
+      "name": "Easter",
+      "models": [
+        {
+          "file": "Easter/bunny_ams.3mf",
+          "name": "Bunny",
+          "image": "Easter/bunny_ams.jpg"
+        },
+        {
+          "file": "Easter/bunnycarrot_ams.3mf",
+          "name": "Bunny with Carrot",
+          "image": "Easter/bunnycarrot_ams.jpg"
+        },
+        {
+          "file": "Easter/bunnyheart_ams.3mf",
+          "name": "Bunny with Heart",
+          "image": "Easter/bunnyheart_ams.jpg"
+        },
+        {
+          "file": "Easter/ChickAMS.3mf",
+          "name": "Hatching Chick",
+          "image": "Easter/ChickAMS.jpg"
+        }
+      ],
+      "outline": "#a78bfa"
+    },
+    {
+      "name": "Farm",
+      "models": [
+        {
+          "file": "Farm/donkey_ams.3mf",
+          "name": "Donkey",
+          "image": "Farm/donkey_ams.jpg"
+        },
+        {
+          "file": "Farm/goat.3mf",
+          "name": "Goat",
+          "image": "Farm/goat.jpg"
+        },
+        {
+          "file": "Farm/HighlandCowAMS.3mf",
+          "name": "Highland Cow",
+          "image": "Farm/HighlandCowAMS.jpg"
+        },
+        {
+          "file": "Farm/horse.3mf",
+          "name": "Horse",
+          "image": "Farm/horse.jpg"
+        },
+        {
+          "file": "Farm/turkey_ams.3mf",
+          "name": "Turkey",
+          "image": "Farm/turkey_ams.jpg"
+        }
+      ],
+      "outline": "#a16207"
+    },
+    {
+      "name": "Woodland",
+      "models": [
+        {
+          "file": "Woodland/BadgerAMS.3mf",
+          "name": "Badger",
+          "image": "Woodland/BadgerAMS.jpg"
+        },
+        {
+          "file": "Woodland/HedgehogAMS.3mf",
+          "name": "Hedgehog",
+          "image": "Woodland/HedgehogAMS.jpg"
+        },
+        {
+          "file": "Woodland/OpossumAMS.3mf",
+          "name": "Opossum",
+          "image": "Woodland/OpossumAMS.jpg"
+        },
+        {
+          "file": "Woodland/WolfAMS.3mf",
+          "name": "Wolf",
+          "image": "Woodland/WolfAMS.jpg"
+        }
+      ],
+      "outline": "#15803d"
+    },
+    {
+      "name": "Jungle & Safari",
+      "models": [
+        {
+          "file": "Jungle & Safari/capybara_ams.3mf",
+          "name": "Capybara",
+          "image": "Jungle & Safari/capybara_ams.jpg"
+        },
+        {
+          "file": "Jungle & Safari/ChameleonAMS.3mf",
+          "name": "Chameleon",
+          "image": "Jungle & Safari/ChameleonAMS.jpg"
+        },
+        {
+          "file": "Jungle & Safari/gorilla2.3mf",
+          "name": "Gorilla",
+          "image": "Jungle & Safari/gorilla2.jpg"
+        },
+        {
+          "file": "Jungle & Safari/KangarooAMS.3mf",
+          "name": "Kangaroo",
+          "image": "Jungle & Safari/KangarooAMS.jpg"
+        },
+        {
+          "file": "Jungle & Safari/PantherAMS.3mf",
+          "name": "Panther",
+          "image": "Jungle & Safari/PantherAMS.jpg"
+        },
+        {
+          "file": "Jungle & Safari/SlothAMS.3mf",
+          "name": "Sloth",
+          "image": "Jungle & Safari/SlothAMS.jpg"
+        },
+        {
+          "file": "Jungle & Safari/TigerAMS.3mf",
+          "name": "Tiger",
+          "image": "Jungle & Safari/TigerAMS.jpg"
+        }
+      ],
+      "outline": "#f97316"
+    },
+    {
+      "name": "Sea & River",
+      "models": [
+        {
+          "file": "Sea & River/beaver_ams.3mf",
+          "name": "Beaver",
+          "image": "Sea & River/beaver_ams.jpg"
+        },
+        {
+          "file": "Sea & River/CrabAMS.3mf",
+          "name": "Crab",
+          "image": "Sea & River/CrabAMS.jpg"
+        },
+        {
+          "file": "Sea & River/fish_ams.3mf",
+          "name": "Fish",
+          "image": "Sea & River/fish_ams.jpg"
+        },
+        {
+          "file": "Sea & River/FrogAMS.3mf",
+          "name": "Frog",
+          "image": "Sea & River/FrogAMS.jpg"
+        },
+        {
+          "file": "Sea & River/narwhal_ams.3mf",
+          "name": "Narwhal",
+          "image": "Sea & River/narwhal_ams.jpg"
+        },
+        {
+          "file": "Sea & River/OtterAMS.3mf",
+          "name": "Otter",
+          "image": "Sea & River/OtterAMS.jpg"
+        },
+        {
+          "file": "Sea & River/OtterSplit.3mf",
+          "name": "Otter (Separate Parts)",
+          "image": "Sea & River/OtterSplit.jpg"
+        }
+      ],
+      "outline": "#2563eb"
+    },
+    {
+      "name": "Birds",
+      "models": [
+        {
+          "file": "Birds/CrowAMS.3mf",
+          "name": "Crow",
+          "image": "Birds/CrowAMS.jpg"
+        },
+        {
+          "file": "Birds/EagleAMS.3mf",
+          "name": "Eagle",
+          "image": "Birds/EagleAMS.jpg"
+        },
+        {
+          "file": "Birds/flamingo_ams2.3mf",
+          "name": "Flamingo",
+          "image": "Birds/flamingo_ams2.jpg"
+        },
+        {
+          "file": "Birds/GooseAMS.3mf",
+          "name": "Goose",
+          "image": "Birds/GooseAMS.jpg"
+        },
+        {
+          "file": "Birds/robin_ams.3mf",
+          "name": "Robin",
+          "image": "Birds/robin_ams.jpg"
+        },
+        {
+          "file": "Birds/SwanAMS.3mf",
+          "name": "Swan",
+          "image": "Birds/SwanAMS.jpg"
+        }
+      ],
+      "outline": "#38bdf8"
+    },
+    {
+      "name": "Bugs",
+      "models": [
+        {
+          "file": "Bugs/bee_ams.3mf",
+          "name": "Bee",
+          "image": "Bugs/bee_ams.jpg"
+        },
+        {
+          "file": "Bugs/LadyBugAMS.3mf",
+          "name": "Ladybug",
+          "image": "Bugs/LadyBugAMS.jpg"
+        }
+      ],
+      "outline": "#eab308"
     }
   ],
   "models": []
