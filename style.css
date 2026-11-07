@@ -1,4 +1,25 @@
-:root {
+:root, :root[data-theme="light"] {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --card-hover: #f0f2f5;
+  --thumb: #eceef2;
+  --text: #1b1d22;
+  --muted: #5d6470;
+  --border: rgba(0, 0, 0, 0.09);
+  --bar: rgba(255, 255, 255, 0.9);
+  --btn: rgba(0, 0, 0, 0.05);
+  --btn-hover: rgba(0, 0, 0, 0.1);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --accent: #22c55e;
+  --accent-text: #052e12;
+  --danger: #b91c1c;
+  --viewer-bg: #eef0f3;
+  --grid-main: #b9bec8;
+  --grid-line: #d8dce2;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
   --bg: #15171c;
   --card: #1f2229;
   --card-hover: #262a33;
@@ -6,8 +27,17 @@
   --text: #f2f3f5;
   --muted: #a3a8b3;
   --border: rgba(255, 255, 255, 0.08);
+  --bar: rgba(28, 31, 38, 0.88);
+  --btn: rgba(255, 255, 255, 0.06);
+  --btn-hover: rgba(255, 255, 255, 0.12);
+  --shadow: none;
   --accent: #4ade80;
+  --accent-text: #0b1a10;
   --danger: #fca5a5;
+  --viewer-bg: #15171c;
+  --grid-main: #4a505c;
+  --grid-line: #2c3038;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -20,9 +50,51 @@ html, body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
+button {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--btn);
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+button:hover { background: var(--btn-hover); }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.theme-btn {
+  position: fixed;
+  top: 14px;
+  right: 16px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.theme-btn svg { width: 20px; height: 20px; }
+.viewer:not([hidden]) ~ .theme-btn, body.viewing .theme-btn { display: none; }
+
 .page { max-width: 1100px; margin: 0 auto; padding: 32px 16px 48px; }
+.page-head { padding-right: 52px; }
 .page-head h1 { margin: 0; font-size: clamp(24px, 5vw, 34px); }
 .sub { margin: 6px 0 0; color: var(--muted); }
+.crumb {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+.crumb:hover { color: var(--text); }
+.crumb[hidden] { display: none; }
 
 .status { color: var(--muted); font-size: 14px; }
 .status:empty { display: none; }
@@ -33,12 +105,14 @@ html, body {
   padding: 0;
   margin: 24px 0 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
 }
 
 .card {
+  display: block;
   width: 100%;
+  height: 100%;
   padding: 0;
   text-align: left;
   background: var(--card);
@@ -46,12 +120,20 @@ html, body {
   border-radius: 14px;
   overflow: hidden;
   color: inherit;
+  text-decoration: none;
   font: inherit;
   cursor: pointer;
+  box-shadow: var(--shadow);
   transition: background 0.15s, transform 0.15s;
 }
 .card:hover { background: var(--card-hover); transform: translateY(-2px); }
-.card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Folder outline color, e.g. red for Christmas. A faint dark ring keeps
+   light outlines (white) visible on a light page. */
+.card.outlined {
+  border: 3px solid var(--outline);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.14), var(--shadow);
+}
 
 .thumb {
   aspect-ratio: 4 / 3;
@@ -60,18 +142,33 @@ html, body {
   place-items: center;
   color: var(--muted);
   font-size: 13px;
+  overflow: hidden;
 }
 .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+/* Folder cover: 2x2 collage of the first models. */
+.thumb.collage {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  place-items: stretch;
+}
+.thumb.collage.one { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+.thumb.collage img { min-height: 0; }
+
 .card-name {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   padding: 12px 14px 14px;
   font-weight: 600;
   overflow-wrap: anywhere;
 }
+.card-name .folder-icon { width: 18px; height: 18px; flex: none; color: var(--muted); }
+.card-name .count { margin-left: auto; color: var(--muted); font-weight: 500; font-size: 13px; white-space: nowrap; }
 
 /* Full-screen viewer */
-.viewer { position: fixed; inset: 0; background: var(--bg); }
+.viewer { position: fixed; inset: 0; background: var(--viewer-bg); }
 .viewer[hidden] { display: none; }
 #viewer-canvas { position: absolute; inset: 0; }
 #viewer-canvas canvas { display: block; touch-action: none; }
@@ -85,10 +182,11 @@ html, body {
   align-items: center;
   gap: 12px;
   padding: 8px;
-  background: rgba(28, 31, 38, 0.88);
+  background: var(--bar);
   border: 1px solid var(--border);
   border-radius: 12px;
   backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
 }
 .viewer-bar h2 {
   flex: 1;
@@ -98,20 +196,6 @@ html, body {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-button {
-  font: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text);
-  cursor: pointer;
-  white-space: nowrap;
-}
-.viewer-bar button:hover { background: rgba(255, 255, 255, 0.12); }
 
 .viewer-status {
   position: absolute;
@@ -126,7 +210,7 @@ button {
   height: 6px;
   margin-top: 10px;
   border-radius: 3px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--btn-hover);
   overflow: hidden;
 }
 .progress[hidden] { display: none; }
@@ -148,8 +232,8 @@ button {
   flex-wrap: wrap;
 }
 .plate-bar[hidden] { display: none; }
-.plate-bar button { background: rgba(28, 31, 38, 0.88); font-size: 13px; padding: 6px 10px; }
-.plate-bar button[aria-pressed="true"] { background: var(--accent); color: #0b1a10; border-color: transparent; }
+.plate-bar button { background: var(--bar); font-size: 13px; padding: 6px 10px; }
+.plate-bar button[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); border-color: transparent; }
 
 .hint {
   position: absolute;
