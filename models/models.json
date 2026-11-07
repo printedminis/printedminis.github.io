@@ -280,6 +280,16 @@
           "image": "Jungle & Safari/ChameleonAMS.jpg"
         },
         {
+          "file": "Jungle & Safari/croc.3mf",
+          "name": "Crocodile",
+          "image": "Jungle & Safari/croc.jpg"
+        },
+        {
+          "file": "Jungle & Safari/FrogAMS.3mf",
+          "name": "Frog",
+          "image": "Jungle & Safari/FrogAMS.jpg"
+        },
+        {
           "file": "Jungle & Safari/Giraffe_ams.3mf",
           "name": "Giraffe",
           "image": "Jungle & Safari/Giraffe_ams.jpg"
@@ -288,6 +298,11 @@
           "file": "Jungle & Safari/gorilla2.3mf",
           "name": "Gorilla",
           "image": "Jungle & Safari/gorilla2.jpg"
+        },
+        {
+          "file": "Jungle & Safari/hippoV2_ams.3mf",
+          "name": "Hippo",
+          "image": "Jungle & Safari/hippoV2_ams.jpg"
         },
         {
           "file": "Jungle & Safari/KangarooAMS.3mf",
@@ -305,6 +320,11 @@
           "image": "Jungle & Safari/monkey.jpg"
         },
         {
+          "file": "Jungle & Safari/panda.3mf",
+          "name": "Panda",
+          "image": "Jungle & Safari/panda.jpg"
+        },
+        {
           "file": "Jungle & Safari/PantherAMS.3mf",
           "name": "Panther",
           "image": "Jungle & Safari/PantherAMS.jpg"
@@ -313,6 +333,11 @@
           "file": "Jungle & Safari/SlothAMS.3mf",
           "name": "Sloth",
           "image": "Jungle & Safari/SlothAMS.jpg"
+        },
+        {
+          "file": "Jungle & Safari/knitted_snake_ams.3mf",
+          "name": "Snake",
+          "image": "Jungle & Safari/knitted_snake_ams.jpg"
         },
         {
           "file": "Jungle & Safari/TigerAMS.3mf",
@@ -326,6 +351,11 @@
       "name": "Sea & River",
       "models": [
         {
+          "file": "Sea & River/AxolotlAMS.3mf",
+          "name": "Axolotl",
+          "image": "Sea & River/AxolotlAMS.jpg"
+        },
+        {
           "file": "Sea & River/beaver_ams.3mf",
           "name": "Beaver",
           "image": "Sea & River/beaver_ams.jpg"
@@ -334,6 +364,11 @@
           "file": "Sea & River/CrabAMS.3mf",
           "name": "Crab",
           "image": "Sea & River/CrabAMS.jpg"
+        },
+        {
+          "file": "Sea & River/dolphin_ams.3mf",
+          "name": "Dolphin",
+          "image": "Sea & River/dolphin_ams.jpg"
         },
         {
           "file": "Sea & River/fish_ams.3mf",
@@ -351,6 +386,11 @@
           "image": "Sea & River/narwhal_ams.jpg"
         },
         {
+          "file": "Sea & River/Octopus.3mf",
+          "name": "Octopus",
+          "image": "Sea & River/Octopus.jpg"
+        },
+        {
           "file": "Sea & River/OtterAMS.3mf",
           "name": "Otter",
           "image": "Sea & River/OtterAMS.jpg"
@@ -359,6 +399,31 @@
           "file": "Sea & River/OtterSplit.3mf",
           "name": "Otter (Separate Parts)",
           "image": "Sea & River/OtterSplit.jpg"
+        },
+        {
+          "file": "Sea & River/SeahorseAMS.3mf",
+          "name": "Seahorse",
+          "image": "Sea & River/SeahorseAMS.jpg"
+        },
+        {
+          "file": "Sea & River/seal_ams.3mf",
+          "name": "Seal",
+          "image": "Sea & River/seal_ams.jpg"
+        },
+        {
+          "file": "Sea & River/shark_ams.3mf",
+          "name": "Shark",
+          "image": "Sea & River/shark_ams.jpg"
+        },
+        {
+          "file": "Sea & River/TurtleAMS.3mf",
+          "name": "Turtle",
+          "image": "Sea & River/TurtleAMS.jpg"
+        },
+        {
+          "file": "Sea & River/Whale2.3mf",
+          "name": "Whale",
+          "image": "Sea & River/Whale2.jpg"
         }
       ],
       "outline": "#2563eb"
